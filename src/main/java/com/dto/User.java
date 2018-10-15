@@ -1,5 +1,7 @@
 package com.dto;
 
+
+
 public class User {
 
 	private int userId;

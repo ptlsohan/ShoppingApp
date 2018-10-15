@@ -14,11 +14,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.controller.ValidateController;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("controller")
+@ComponentScan("com")
 public class AppConfig {
 	
 	@Bean

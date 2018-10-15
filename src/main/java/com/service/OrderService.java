@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.dto.Order;
 
-
-public interface OrderRepository {
+public interface OrderService {
 	Order getOrder();
 	List<String> getProductByUsername(String uname);
 	int updateOrder(int id);

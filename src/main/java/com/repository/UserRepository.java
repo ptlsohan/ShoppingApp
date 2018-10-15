@@ -1,7 +1,7 @@
 package com.repository;
 
-public interface User {
-	User getAllUser();
+public interface UserRepository {
+	UserRepository getAllUser();
 	int addUser();
 	int deleteUser();
 	int updateUser();

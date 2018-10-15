@@ -1,8 +1,8 @@
 package com.repository;
 
-public class UserImpl implements User {
+public class UserImpl implements UserRepository {
 
-	public User getAllUser() {
+	public UserRepository getAllUser() {
 		// TODO Auto-generated method stub
 		return null;
 	}
