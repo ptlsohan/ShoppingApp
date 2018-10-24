@@ -1,10 +1,15 @@
 package com.service;
 
-import com.repository.UserRepository;
+import java.util.List;
+
+import com.dto.User;
+
 
 public interface UserService {
-	UserRepository getAllUser();
-	int addUser();
-	int deleteUser();
-	int updateUser();
+	List<User> getAllUser();
+	User getUserByUName(String uname);
+	int addUser(User user);
+	int deleteUser(int id);
+	int updateUser(User u);
 }
+

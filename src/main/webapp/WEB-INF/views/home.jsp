@@ -1,40 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Home</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-</head>
-<body>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" >
-  <a class="navbar-brand" href="#">Online Shopping Cart</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" href="home" >Home</a>
-      <a class="nav-item nav-link" href="fashion" >Fashion</a>
-      <a class="nav-item nav-link" href="electronics" >Electronics</a>
-      <a class="nav-item nav-link" href="book" >Books</a>
-      <a class="nav-item nav-link" href="mobile" >Mobile</a>
-      <a class="nav-item nav-link" href="register" >Register</a>
-      <a class="nav-item nav-link" href="login" >Login</a>
-       </div>
+     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
-       
+      <%@taglib uri="http://www.springframework.org/tags" prefix="tag" %>
+    
+<jsp:include page="header.jsp"></jsp:include>
 
+
+  <div class="jumbotron">
+
+<!-- corosel -->
+    
+
+
+    <h1 class="display-4">Home Page </h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <hr class="my-4">
+    
   </div>
-  </nav>
-Home page
 
+
+
+
+<div class="container">
+  <div class="row justify-content-center">
+
+  <div class="card col-sm-3 m-1" style="width: 18rem; background-color: #f56954;color: #fff;">
+
+
+  <div class="card-body" >
+<h3 class="card-title"><tag:message code="fashion"></tag:message></h3>
+    <a href="fashion?start=0" class="btn btn-primary">Shop</a>
+  </div>
+  </div>
+
+
+  <div class="card col-sm-3 m-1" style="width: 18rem; background-color: #0073b7;color: #fff;">
+
+  <div class="card-body">
+    <h3 class="card-title"><tag:message code="laptop"></tag:message></h3>
+    <p class="card-text"></p>
+    <a href="laptop?start=0" class="btn btn-primary">Shop</a>
+  </div>
+  </div>
+
+  <div class="card col-sm-3 m-1" style="width: 18rem; background-color: #00a65a;color: #fff;">
+
+  <div class="card-body">
+    <h3 class="card-title"><tag:message code="mobile"></tag:message></h3>
+    
+    <a href="mobile?start=0" class="btn btn-primary">Shop</a>
+  </div>
+  </div>
+
+  <div class="card col-sm-3 m-1" style="width: 18rem; background-color: #ba79cb;color: #fff;">
+
+  <div class="card-body">
+    <h3 class="card-title"><tag:message code="books"></tag:message></h3>
+    
+    <a href="book?start=0" class="btn btn-primary">Shop</a>
+  </div>
+  </div>
+  <div class="card col-sm-3 m-1" style="width: 18rem; background-color: #ec3b83;color: #fff;">
+
+  <div class="card-body">
+    <h5 class="card-title"><tag:message code="allCategory"></tag:message></h5>
+    <p class="card-text"></p>
+    <a href="displayProduct?start=0" class="btn btn-primary">Shop</a>
+  </div>
+  </div>
+
+</div>
+</div>
+<!-- <img src="./images/bg.jpg"> -->
 </body>
 </html>

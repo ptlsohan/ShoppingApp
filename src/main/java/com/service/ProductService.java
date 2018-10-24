@@ -5,8 +5,11 @@ import java.util.List;
 import com.dto.Product;
 
 public interface ProductService {
-	Product getAllProduct();
-	List<String> getProductByCategory(String category);
+	List<Product> getAllProduct();
+	List<Product> getProductByCategory(String category);
+	List<Product> getAllProductByPage(int i);
+	List<Product> searchProduct(String key);
+	List<Product> getProductByPage(String category,int s);
 	Product getProductById(int id);
 	int updateProduct(int id);
 	int deleteProduct(int id);

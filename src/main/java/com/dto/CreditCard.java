@@ -1,67 +1,51 @@
 package com.dto;
 
 import java.sql.Date;
+import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Entity
 public class CreditCard {
 
+	@GeneratedValue
+	@Id
 	private int id;
-	private int userId;
 	
+	@OneToOne
+	private Order order;
+	
+	@NotBlank
 	private String fullName;
-	private Integer cardNum;
+	@NotBlank
+	@Size(min=16,max=16)
+	private String cardNum;
+	//@Pattern(regexp="^([12]\\d)?(\\d\\d)[\\.\\/\\-](0?[1-9]|1[012])[\\.\\/\\-](0?[1-9]|[12]\\d|3[01])$",message="Invalid date format")
+	@DateTimeFormat(iso=ISO.DATE)
 	private Date expDate;
-	private Address billAddr;
-	public CreditCard() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public CreditCard(int userId, String fullName, Integer cardNum, Date expDate,  Address billAddr) {
-		super();
-		this.userId = userId;
-		this.billAddr = billAddr;
-		this.fullName = fullName;
-		this.cardNum = cardNum;
-		this.expDate = expDate;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	public String getFullName() {
-		return fullName;
-	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-	public Integer getCardNum() {
-		return cardNum;
-	}
-	public void setCardNum(Integer cardNum) {
-		this.cardNum = cardNum;
-	}
-	public Date getExpDate() {
-		return expDate;
-	}
-	public void setExpDate(Date expDate) {
-		this.expDate = expDate;
-	}
-	public Address getBillAddr() {
-		return billAddr;
-	}
-	public void setBillAddr(Address billAddr) {
-		this.billAddr = billAddr;
-	}
-	
-	
-	
+//	private Address billAddr;
 	
 	
 }

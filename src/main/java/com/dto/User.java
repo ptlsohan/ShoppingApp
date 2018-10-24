@@ -1,48 +1,61 @@
 package com.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import javax.validation.constraints.NotBlank;
 
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude= {"userProfile","orders","cart"})
+@EqualsAndHashCode
+@Entity
 public class User {
-
+	
+	@Id
+	@GeneratedValue
 	private int userId;
+	
+	@Column(unique = true)
+	@NotBlank
 	private String username;
+	@NotBlank
 	private String password;
+	
+	@Enumerated(EnumType.STRING)
 	private Role role;
-	public User() {
-		super();
-	}
-	public User(String username, String password, Role role) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.role = role;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
 	
+	@OneToOne(mappedBy="user")
+	private UserProfile userProfile;
 	
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Cart cart;
+	
+	@OneToMany
+	private List<Order> orders=new ArrayList<>();
 	
 	
 	

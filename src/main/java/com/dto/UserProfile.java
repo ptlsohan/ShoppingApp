@@ -1,61 +1,64 @@
 package com.dto;
 
-public class UserProfile {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-	private int userId;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(exclude="profile")
+@EqualsAndHashCode
+@Entity
+public class UserProfile {
+	@GeneratedValue
+	@Id
+	private int profileId;
+	
+	@Length(min=2)
+	@NotBlank
 	private String firstName;
+	@NotBlank
 	private String lastName;
+	@Min(value = 18,message="User must be above 18")
+	@Max(value=100)
 	private int age;
+	
 	private Gender gender;
-	private Address address;
-	public UserProfile() {
-		super();
-	}
-	public UserProfile(int userId, String firstName, String lastName, int age, Gender gender, Address address) {
-		super();
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.gender = gender;
-		this.address = address;
-	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public Gender getGender() {
-		return gender;
-	}
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+	@ManyToMany(mappedBy="profile",fetch=FetchType.EAGER)
+	private List<Address> address=new ArrayList<>();
+	
+	@OneToOne(cascade=CascadeType.PERSIST)
+	private User user;
+	
+	
+	
 	
 	
 	
