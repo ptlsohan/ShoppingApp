@@ -22,7 +22,7 @@
           </h4>
           <ul class="list-group mb-3">
           <c:forEach items="${list}" var="entry">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <li class="list-group-item d-flex justify-content-between lh-condensed" style="background-color: rgba(255,255,255,0.6)">
               <div>
                 <h6 class="my-0">${entry.key.name}</h6>
                 <small class="text-muted"> $${entry.key.price} x ${entry.value}</small>
@@ -32,7 +32,7 @@
             </c:forEach>
            
             
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between" style="background-color: rgba(255,255,255,0.6)">
               <span>Total (USD)</span>
               <strong>$${total}</strong>
             </li>
@@ -60,19 +60,33 @@
               </div>
             </div>
 
-            
 
+		<div>
+            <input type="radio" id="selectAddress"
+                   name="select" value="selectAddress"  />
+            <label for="selectAddress">Select existing Address</label>
+        </div>
+
+        <div>
+            <input type="radio" id="newAddress"
+                   name="select" value="newAddress" checked/>
+            <label for="newAddress">Add newAddress</label>
+        </div>
+		<button type="button" id="showList" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">Select address</button>
+            
+	 <fieldset >
+	 <input type="hidden" id="addressId" name="addressId" >
             <div class="mb-3">
-              <label for="address">Street</label>
-              <input type="text" class="form-control" id="address" name="street" placeholder="1234 Main St" required="">
+              <label for="street">Street</label>
+              <input type="text" class="form-control" id="street" name="street" placeholder="1234 Main St" required="">
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="address2">Apt </label>
-              <input type="text" class="form-control" id="address2" name="apt" placeholder="Apartment or suite">
+              <label for="apt">Apt </label>
+              <input type="text" class="form-control" id="apt" name="apt" placeholder="Apartment or suite">
             </div>
             
             <div class="mb-3">
@@ -101,6 +115,8 @@
               <label for="phone">Phone </label>
               <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
             </div>
+           </fieldset>
+           
            
             <hr class="mb-4">
 
@@ -148,49 +164,64 @@
       </div>
 
       <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2017-2018 Company Name</p>
+        <p class="mb-1">© 2017-2018 Shopping App</p>
         <ul class="list-inline">
-          <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.0/examples/checkout/#">Privacy</a></li>
-          <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.0/examples/checkout/#">Terms</a></li>
-          <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.0/examples/checkout/#">Support</a></li>
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Support</a></li>
         </ul>
       </footer>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./Checkout example for Bootstrap_files/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="./Checkout example for Bootstrap_files/popper.min.js"></script>
-    <script src="./Checkout example for Bootstrap_files/bootstrap.min.js"></script>
-    <script src="./Checkout example for Bootstrap_files/holder.min.js"></script>
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
+  
+  
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Select Address</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+       <c:forEach items="${addresses}" var="entry">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+             
+             
+              <div>
+                <h6 class="my-0"> <div>
+            <input type="radio" id="${entry}"
+                   name="addressList" 
+     value="${entry.addressId }"  />
+            <label for="${entry}">${entry.street} ${entry.apt} </label>
+        </div></h6>
+                
+              </div>
+             
+            </li>
+            </c:forEach>
+      
+       
 
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
   
 
-</body></html>
+<script type="text/javascript" src="JS/checkOut.js">
+<!--
 
+//-->
+</script>
+<script src="JS/autocomplete.js"></script>
 
 </body>
 </html>

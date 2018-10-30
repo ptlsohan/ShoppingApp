@@ -15,9 +15,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
+import com.validator.ConfirmPassword;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,6 +34,7 @@ import lombok.ToString;
 @ToString(exclude= {"userProfile","orders","cart"})
 @EqualsAndHashCode
 @Entity
+@ConfirmPassword
 public class User {
 	
 	@Id
@@ -44,6 +46,9 @@ public class User {
 	private String username;
 	@NotBlank
 	private String password;
+	
+	@Transient
+	private String confirmPassword;
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;

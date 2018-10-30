@@ -36,6 +36,11 @@ public class HibernateConfig {
 	private String dialect;
 	@Value("${DB_Show_url}")
 	private String show_url;
+	@Value("${DB_Cache}")
+	private String cache;
+	@Value("${DB_CacheRegion}")
+	private String cacheRegion;
+	
 	
 	@Bean
 	public SessionFactory getSessionFactory() {
@@ -62,6 +67,12 @@ public class HibernateConfig {
 			cfg.setProperty("hibernate.connection.driver_class",driverName);
 			cfg.setProperty("hibernate.connection.url",url);
 			cfg.setProperty(Environment.SHOW_SQL,show_url);
+			
+			cfg.setProperty("hibernate.cache.use_second_level_cache",cache);
+			cfg.setProperty("hibernate.cache.region.factory_class",cacheRegion);
+			
+			
+			
 			StandardServiceRegistryBuilder rb = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties());
 			SessionFactory sf = cfg.buildSessionFactory(rb.build());
 			
@@ -125,6 +136,22 @@ public class HibernateConfig {
 
 	public void setShow_url(String show_url) {
 		this.show_url = show_url;
+	}
+
+	public String getCache() {
+		return cache;
+	}
+
+	public void setCache(String cache) {
+		this.cache = cache;
+	}
+
+	public String getCacheRegion() {
+		return cacheRegion;
+	}
+
+	public void setCacheRegion(String cacheRegion) {
+		this.cacheRegion = cacheRegion;
 	}
 	
 	

@@ -30,12 +30,37 @@
 							</td>
 							<td data-th="Price">$${entry.key.price}</td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="${entry.value}">
+								<input type="number" readOnly class="form-control text-center" value="${entry.value}">
 							</td>
 							<td data-th="Subtotal" class="text-center">${entry.key.price*entry.value}</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								 <form action="deleteItem" method="post"><input type="hidden" id="p" name="id" value="${entry.key.id}"><input type="submit" class="btn btn-danger" value="delete"></form>								
+							
+								 
+								 
+								 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong${entry.key.id}">
+  Remove
+</button>
+								 <div class="modal fade" id="exampleModalLong${entry.key.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Alert!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Remove item from Cart?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="deleteItem" method="post"><input type="hidden" id="p" name="id" value="${entry.key.id}">
+								 <button type="submit" class="btn btn-danger">Delete</button></form>	
+								 
+      </div>
+    </div>
+  </div>
+</div>							
 							</td>
 						</tr>
 						</c:forEach>
@@ -58,6 +83,6 @@
 </c:if>
 
 
-
+<script src="JS/autocomplete.js"></script>
 </body>
 </html>

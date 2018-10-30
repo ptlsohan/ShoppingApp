@@ -12,6 +12,6 @@
     <a class="btn btn-primary btn-lg" href="home" role="button">Continue shopping</a>
   </p>
 </div>
-
+<script src="JS/autocomplete.js"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dto.Book;
 import com.dto.Laptop;
+import com.dto.Mobile;
 
 @Repository
 public class BookRepositoryImpl implements BookRepository {
@@ -44,8 +45,12 @@ public class BookRepositoryImpl implements BookRepository {
 
 	@Override
 	public Book getBookById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Book book = session.get(Book.class, id);
+		tx.commit();
+		session.close();
+		return book;
 	}
 
 	@Override
@@ -73,7 +78,8 @@ public class BookRepositoryImpl implements BookRepository {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<Book> cr = cb.createQuery(Book.class);
 		Root<Book> root = cr.from(Book.class);
-		cr.where(cb.like(root.get("name"),"%"+key+"%"));
+		cr.where(cb.or(cb.like(root.get("name"),"%"+key+"%"),cb.like(root.get("companyName"),"%"+key+"%")));
+		
 		
 		Query query = session.createQuery(cr);
 		List<Book> results = query.getResultList();

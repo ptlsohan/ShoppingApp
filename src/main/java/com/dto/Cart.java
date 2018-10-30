@@ -41,7 +41,7 @@ public class Cart {
 	//@Column(name="quantity", columnDefinition="NUMBER")
 	@ElementCollection(fetch=FetchType.EAGER)
 	private Map<Product,Integer> cartList=new LinkedHashMap<>();
-	@OneToOne(cascade=CascadeType.REMOVE,fetch=FetchType.EAGER)
+	@OneToOne(fetch=FetchType.EAGER)
 	private User user;
 	
 	

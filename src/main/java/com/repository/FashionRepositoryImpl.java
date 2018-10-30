@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Fashion;
+import com.dto.Mobile;
 import com.dto.Product;
 
 
@@ -41,7 +42,8 @@ public class FashionRepositoryImpl implements FashionRepository {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<Fashion> cr = cb.createQuery(Fashion.class);
 		Root<Fashion> root = cr.from(Fashion.class);
-		cr.where(cb.like(root.get("name"),"%"+key+"%"));
+		cr.where(cb.or(cb.like(root.get("name"),"%"+key+"%"),cb.like(root.get("companyName"),"%"+key+"%")));
+		
 		
 		Query query = session.createQuery(cr);
 		List<Fashion> results = query.getResultList();
@@ -51,8 +53,12 @@ public class FashionRepositoryImpl implements FashionRepository {
 
 	@Override
 	public Fashion getFashionById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Fashion fashion= session.get(Fashion.class, id);
+		tx.commit();
+		session.close();
+		return fashion;
 	}
 
 	@Override

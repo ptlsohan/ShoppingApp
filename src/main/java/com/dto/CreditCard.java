@@ -40,7 +40,6 @@ public class CreditCard {
 	@NotBlank
 	private String fullName;
 	@NotBlank
-	@Size(min=16,max=16)
 	private String cardNum;
 	//@Pattern(regexp="^([12]\\d)?(\\d\\d)[\\.\\/\\-](0?[1-9]|1[012])[\\.\\/\\-](0?[1-9]|[12]\\d|3[01])$",message="Invalid date format")
 	@DateTimeFormat(iso=ISO.DATE)

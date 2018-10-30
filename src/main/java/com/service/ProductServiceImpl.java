@@ -67,4 +67,16 @@ public class ProductServiceImpl implements ProductService{
 		return prep.getAllProductByPage(i);
 	}
 
+	@Override
+	public int getQty(int id) {
+		// TODO Auto-generated method stub
+		return prep.getQty(id);
+	}
+
+	@Override
+	public List<Product> searchApi(String key) {
+		// TODO Auto-generated method stub
+		return prep.searchApi(key);
+	}
+
 }

@@ -1,7 +1,9 @@
 package com.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 
 
@@ -11,6 +13,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,10 +29,15 @@ import com.dto.CreditCard;
 import com.dto.Order;
 import com.dto.Product;
 import com.dto.User;
+import com.dto.UserProfile;
+import com.exception.DBException;
+import com.service.AddressService;
 import com.service.CartService;
 import com.service.OrderService;
 import com.service.ProductService;
+import com.service.ProfileService;
 import com.service.UserService;
+import com.util.MyDateEditor;
 
 @Controller
 @SessionAttributes({"cart"}) 
@@ -36,8 +45,11 @@ public class CartController {
 
 	@Autowired ProductService ps;
 	@Autowired UserService us;
+	@Autowired ProfileService ups;
 	@Autowired CartService cs;
 	@Autowired OrderService os;
+	@Autowired AddressService addserv;
+	
 	
 	@ModelAttribute("cart")
 	public Map<Product,Integer> newCart() {
@@ -80,6 +92,7 @@ public class CartController {
 			if(isNewCart)
 			{	//cs.updateProduct(c1);
 				user.setCart(c1);
+				user.setConfirmPassword(user.getPassword());
 				us.updateUser(user);
 			}
 			else
@@ -174,6 +187,12 @@ public class CartController {
 			
 		}else {
 		User ucart=cs.getProductById(user.getUserId());
+		if(ucart==null || ucart.getCart()==null) {
+			mv.setViewName("forward:home");
+			return mv;
+		}
+		List<Address> addresses =user.getUserProfile().getAddress();
+		System.out.println(user.getUserProfile().getAddress());
 		Map<Product,Integer> list =ucart.getCart().getCartList();
 		double total=0;
 		 for(Map.Entry<Product,Integer> entry: list.entrySet()) {
@@ -183,6 +202,7 @@ public class CartController {
 		 }
 		 mv.setViewName("checkout");
 		 mv.addObject("total",total);
+		 mv.addObject("addresses",addresses);
 		 mv.addObject("list",list);
 		
 		}
@@ -192,12 +212,27 @@ public class CartController {
 	
 	
 	@RequestMapping("/makePayment")
-	public ModelAndView makePayment(HttpSession session,@Valid @ModelAttribute("order") Order order,
-			@Valid @ModelAttribute("address") Address address,@Valid @ModelAttribute("card") CreditCard card, BindingResult result) {
+	public ModelAndView makePayment(HttpSession session,@Valid @ModelAttribute("order") Order order,BindingResult result,
+			@Valid @ModelAttribute("address") Address address,BindingResult result1,@Valid @ModelAttribute("card") CreditCard card, BindingResult result2) throws DBException {
 		if(result.hasErrors()) {
 			ModelAndView mv= new ModelAndView();
 			mv.addObject("error",result.getAllErrors());
-			mv.setViewName("checkout");
+			mv.setViewName("forward:checkout");
+			return mv;
+			
+		}
+		if(result1.hasErrors()) {
+			ModelAndView mv= new ModelAndView();
+			mv.addObject("error",result1.getAllErrors());
+			mv.setViewName("forward:checkout");
+			return mv;
+			
+		}
+		if(result2.hasErrors()) {
+			
+			ModelAndView mv= new ModelAndView();
+			mv.addObject("error",result2.getAllErrors());
+			mv.setViewName("forward:checkout");
 			return mv;
 			
 		}
@@ -211,11 +246,14 @@ public class CartController {
 			User ucart=cs.getProductById(user.getUserId());
 			Map<Product,Integer> list =ucart.getCart().getCartList();
 			order.setProductList(list);
+			addserv.addAddress(address);
 			order.setAddress(address);
+			//System.out.println("address id"+ address.getAddressId());
 			order.setCard(card);
 			order.setUser(user);
 			int id=os.addOrder(order);
 			//cs.deleteProduct(ucart.getCart());
+			ucart.setConfirmPassword(ucart.getPassword());
 			ucart.setCart(null);
 			us.updateUser(ucart);
 			session.setAttribute("orderId",id);
@@ -238,6 +276,13 @@ public class CartController {
 		session.removeAttribute("orderId");
 		
 		return mv;
+	}
+	
+	@InitBinder
+	public void init(WebDataBinder binder) {
+		
+		binder.registerCustomEditor(Date.class, "expDate", new MyDateEditor());
+		
 	}
 	
 	

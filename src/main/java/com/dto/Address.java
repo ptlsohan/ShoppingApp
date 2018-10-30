@@ -1,5 +1,6 @@
 package com.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import javax.validation.constraints.NotBlank;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,26 +34,29 @@ import lombok.ToString;
 @ToString(exclude="profile")
 @EqualsAndHashCode
 @Entity
-public class Address {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public class Address implements Serializable {
 	
 	@GeneratedValue
 	@Id
 	private Integer addressId;
 	
-	@NotBlank
+	//@NotBlank
 	private String street;
 	
 	private String apt;
-	@NotBlank
+	//@NotBlank
 	private String city;
-	@NotBlank
+//	@NotBlank
 	private String state;
-	@NotBlank
+//	@NotBlank
 	private String zip;
-	@NotBlank
+//	@NotBlank
 	private String country;
 	private String phone;
 	
+	@JsonIgnore
 	@ManyToMany(cascade=CascadeType.PERSIST,fetch=FetchType.EAGER)
 	private List<UserProfile> profile = new ArrayList<>();
 	
@@ -61,5 +70,7 @@ public class Address {
 	}
 	
 	
-	
+
+
 }
+

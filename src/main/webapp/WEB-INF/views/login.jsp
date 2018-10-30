@@ -15,7 +15,7 @@
   ${msg} 
 </div>
 </c:if>
-<div class="card" style="margin:20px; padding:10px;" >
+<div class="card" style="margin:20px; padding:10px; background-color: rgba(0,0,0,.6);color:white;" >
   <div class="card-header">
    <h4><tag:message code="loginHead"></tag:message> </h4> 
   </div>
@@ -47,6 +47,7 @@
   
 </div>
 <!-- <script src="./JS/loginValidation.js"></script> -->
+<script src="JS/autocomplete.js"></script>
 </body>
 
 </html>

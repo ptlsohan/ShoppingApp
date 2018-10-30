@@ -17,9 +17,14 @@ public class AddressRepositoryImpl implements AddressRepository {
 	SessionFactory sf;
 	
 	@Override
-	public List<Address> getAddresstById(int id) {
+	public Address getAddresstById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Address address=session.get(Address.class, id);
+		tx.commit();
+		session.close();
+		return address;
 	}
 
 	@Override
@@ -34,20 +39,36 @@ public class AddressRepositoryImpl implements AddressRepository {
 	}
 
 	@Override
-	public int deleteAddress(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteAddress(Address a) {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		session.delete(a);
+		
+		tx.commit();
+		session.close();
+		
 	}
 
 	@Override
 	public int addAddress(Address a) {
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		session.persist(a);
+		int id=(int) session.save(a);
 		
 		tx.commit();
 		session.close();
-		return 0;
+		return id;
+	}
+
+	@Override
+	public void addOrUpdate(Address a) {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(a);
+		
+		tx.commit();
+		session.close();
+		
 	}
 
 }

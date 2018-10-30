@@ -2,15 +2,18 @@ package com.config;
 
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -79,9 +82,27 @@ public class AppConfig  implements WebMvcConfigurer {
 	}
 	
 	@Bean("propertySource")
-	public static PropertySourcesPlaceholderConfigurer getDatabasePropertry() {
+	@Profile("!test")
+	public static PropertySourcesPlaceholderConfigurer getDevDatabasePropertry() {
 		PropertySourcesPlaceholderConfigurer pc = new PropertySourcesPlaceholderConfigurer();
 		pc.setLocation(new ClassPathResource("db.properties"));
+		return pc;
+	}
+	
+	
+	@Bean("propertySource")
+	@Profile("test")
+	public static PropertySourcesPlaceholderConfigurer getTestDatabasePropertry() {
+		PropertySourcesPlaceholderConfigurer pc = new PropertySourcesPlaceholderConfigurer();
+		pc.setLocation(new ClassPathResource("db_test.properties"));
+		return pc;
+	}
+	
+	@Bean("propertySource")
+	@Profile("prod")
+	public static PropertySourcesPlaceholderConfigurer getProdDatabasePropertry() {
+		PropertySourcesPlaceholderConfigurer pc = new PropertySourcesPlaceholderConfigurer();
+		pc.setLocation(new ClassPathResource("db_prod.properties"));
 		return pc;
 	}
 	
@@ -94,9 +115,12 @@ public class AppConfig  implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/");
+		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/views/images/").setCacheControl(CacheControl.maxAge(20, TimeUnit.MINUTES));
+		registry.addResourceHandler("/icon/**").addResourceLocations("/WEB-INF/views/icon.ico/").setCacheControl(CacheControl.maxAge(20, TimeUnit.MINUTES));
+		registry.addResourceHandler("/JS/**").addResourceLocations("/WEB-INF/views/JS/").setCacheControl(CacheControl.maxAge(0, TimeUnit.MINUTES));;
+		registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/views/css/").setCacheControl(CacheControl.maxAge(0, TimeUnit.MINUTES));;
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-		System.out.println("registry method");
+		
 		//registry.addResourceHandler("/js/**").addResourceLocations("/js/");
 	}
 	

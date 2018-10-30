@@ -38,8 +38,32 @@
 							</td>
 							<td data-th="Subtotal" class="text-center">${entry.totalAmt}</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								 <form action="deleteOrder" method="post"><input type="hidden" id="id" name="id" value="${entry.orderId}"><input type="submit" class="btn btn-danger" value="delete"></form>								
+			
+								 								
+							
+							 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong${entry.orderId}">
+  Remove
+</button>
+								 <div class="modal fade" id="exampleModalLong${entry.orderId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Alert!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Delete order?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="deleteOrder" method="post"><input type="hidden" id="id" name="id" value="${entry.orderId}"><input type="submit" class="btn btn-danger" value="delete"></form>	
+								 
+      </div>
+    </div>
+  </div>
+</div>			
 							</td>
 						</tr>
 						</c:forEach>
@@ -58,7 +82,7 @@
 				</table>
 </div>
 
-
+<script src="JS/autocomplete.js"></script>
 
 </body>
 </html>

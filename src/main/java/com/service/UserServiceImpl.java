@@ -32,10 +32,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateUser(User u) {
+	public void updateUser(User u) {
 		// TODO Auto-generated method stub
 		urep.updateUser(u);
-		return 0;
+	
 	}
 
 	@Override

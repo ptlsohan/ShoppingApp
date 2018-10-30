@@ -13,4 +13,5 @@ public interface CartRepository {
 	int updateProduct(Cart c);
 	int deleteProduct(Cart c);
 	int addCart(Cart c);
+	void updateQty(int id,int qty);
 }

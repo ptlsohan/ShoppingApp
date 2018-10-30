@@ -8,7 +8,7 @@ import com.exception.DBException;
 public interface OrderService {
 	Order getOrder();
 	List<Order> getProductByUserId(int id);
-	int updateOrder(Order o);
+	int updateOrder(Order o) throws DBException;
 	int deleteOrder(int id) throws DBException;
-	int addOrder(Order o);
+	int addOrder(Order o) throws DBException;
 }

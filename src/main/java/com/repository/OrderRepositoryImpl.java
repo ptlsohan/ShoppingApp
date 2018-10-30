@@ -1,6 +1,7 @@
 package com.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Query;
 
@@ -11,13 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Order;
-import com.dto.User;
+import com.dto.Product;
 import com.exception.DBException;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
 
 	@Autowired SessionFactory sf;
+	@Autowired ProductRepository ps;
 	@Override
 	public Order getOrder() {
 		// TODO Auto-generated method stub
@@ -28,15 +30,29 @@ public class OrderRepositoryImpl implements OrderRepository {
 	public List<Order> getOrderByUserId(int id) {
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		List<Order> o = session.createQuery("from Order").getResultList();
+		List<Order> o = session.createQuery("from Order where user="+id).getResultList();
 		tx.commit();
 		session.close();
 		return o;
 	}
 
 	@Override
-	public int updateOrder(Order o) {
-		// TODO Auto-generated method stub
+	public int updateOrder(Order o) throws DBException {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		for(Map.Entry<Product, Integer> entry: o.getProductList().entrySet()) {
+			int qty=ps.getQty(entry.getKey().getId());
+			if(qty-entry.getValue()<0) {
+				throw new DBException("Product not available"+entry.getKey().getName());
+			}
+			ps.updateProduct(entry.getKey().getId(),qty-entry.getValue());
+		}
+		
+		 session.merge(o);
+		
+		tx.commit();
+		session.close();
 		return 0;
 	}
 
@@ -57,9 +73,18 @@ public class OrderRepositoryImpl implements OrderRepository {
 	}
 
 	@Override
-	public int addOrder(Order o) {
+	public int addOrder(Order o) throws DBException {
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
+		
+		for(Map.Entry<Product, Integer> entry: o.getProductList().entrySet()) {
+			int qty=ps.getQty(entry.getKey().getId());
+			if(qty-entry.getValue()<0) {
+				throw new DBException("Product not available"+entry.getKey().getName());
+			}
+			ps.updateProduct(entry.getKey().getId(),qty-entry.getValue());
+		}
+		
 		int id= (int) session.save(o);
 		
 		tx.commit();

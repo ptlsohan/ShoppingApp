@@ -79,5 +79,6 @@ ${error }
  <button type="submit" class="btn btn-primary">Register</button>
 </form>
 </div>
+<script src="JS/autocomplete.js"></script>
 </body>
 </html>

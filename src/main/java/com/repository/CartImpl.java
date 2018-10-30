@@ -76,4 +76,10 @@ public class CartImpl implements CartRepository {
 		return id;
 	}
 
+	@Override
+	public void updateQty(int id, int qty) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

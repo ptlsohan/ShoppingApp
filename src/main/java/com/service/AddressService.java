@@ -5,8 +5,9 @@ import java.util.List;
 import com.dto.Address;
 
 public interface AddressService {
-	List<Address> getAddresstById(int id);
+	Address getAddresstById(int id);
 	int updateAddress(Address a);
-	int deleteAddress(int id);
+	void deleteAddress(Address a);
 	int addAddress(Address a);
+	void addOrUpdate(Address a);
 }

@@ -46,7 +46,10 @@ public class ValidateController {
 	@RequestMapping("/profile")
 	public ModelAndView profile(@ModelAttribute("user") User user) {
 		ModelAndView mv = new ModelAndView("profile");
-		
+		if(user==null || user.getUserId()==0) {
+			mv.setViewName("login");
+			return mv;
+		}
 		mv.addObject("user",user);
 		System.out.println("profile"+user.getUsername());
 		UserProfile profile=pserv.getProfileById(user.getUserId());
@@ -84,11 +87,13 @@ public class ValidateController {
 				//us.updateUser(user);
 			//	u.setCart(c1);
 				int id=cserv.addCart(c1);
+				u.setConfirmPassword(u.getPassword());
 				us.updateUser(u);
 				value=cart.size();
 				System.out.println("user cart"+u.getCart());
 			}else if(u.getCart()!=null) {
 				u.getCart().getCartList().putAll(cart);
+				u.setConfirmPassword(u.getPassword());
 				us.updateUser(u);
 				cart.clear();
 				value=u.getCart().getCartList().size();
@@ -132,7 +137,7 @@ public class ValidateController {
 	
 	@InitBinder
 	public void init(WebDataBinder binder) {
-		binder.setDisallowedFields("confirm_password");
+		binder.setDisallowedFields("confirmPassword");
 	}
 
 }

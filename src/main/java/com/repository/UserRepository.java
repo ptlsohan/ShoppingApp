@@ -9,6 +9,6 @@ public interface UserRepository {
 	User getUserByUName(String uname);
 	int addUser(User user);
 	int deleteUser(int id);
-	int updateUser(User u);
+	void updateUser(User u);
 	
 }

@@ -2,7 +2,8 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <jsp:include page="header.jsp"></jsp:include>
 
-
+<div class="jumbotron">
 ${errorMessage }
+</div>
 </body>
 </html>

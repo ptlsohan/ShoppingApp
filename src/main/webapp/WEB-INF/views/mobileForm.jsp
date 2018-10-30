@@ -16,7 +16,7 @@
   </div>
 <form action="addMobile" method="post" >
   <div class="form-group">
-    <label for="name"><tag:message code="name"></tag:message></label>
+    <label for="name"><tag:message code="productName"></tag:message></label>
     <input type="text" class="form-control" id="name" name="name"  placeholder="name">
 
   </div>
@@ -76,6 +76,6 @@
 </div>
 </div>
 </div>
-
+<script src="JS/autocomplete.js"></script>
 </body>
 </html>

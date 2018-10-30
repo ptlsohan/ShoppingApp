@@ -17,37 +17,37 @@ public class FashionServiceImpl implements FashionService {
 	@Override
 	public List<Fashion> getAllFashion() {
 		// TODO Auto-generated method stub
-		return null;
+		return frep.getAllFashion();
 	}
 
 	@Override
 	public List<Fashion> getProductByCategory(String category) {
 		// TODO Auto-generated method stub
-		return null;
+		return frep.getProductByCategory(category);
 	}
 
 	@Override
 	public Fashion getFashionById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return frep.getFashionById(id);
 	}
 
 	@Override
 	public int updateFashion(Fashion f) {
 		// TODO Auto-generated method stub
-		return 0;
+		return frep.updateFashion(f);
 	}
 
 	@Override
 	public int deleteProduct(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return frep.deleteProduct(id);
 	}
 
 	@Override
 	public int addProduct(Fashion f) {
 		// TODO Auto-generated method stub
-		return 0;
+		return frep.addProduct(f);
 	}
 
 	@Override

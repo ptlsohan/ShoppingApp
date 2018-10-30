@@ -73,7 +73,8 @@ public class MobileRepositoryImpl implements MobileRepository{
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<Mobile> cr = cb.createQuery(Mobile.class);
 		Root<Mobile> root = cr.from(Mobile.class);
-		cr.where(cb.like(root.get("name"),"%"+key+"%"));
+		cr.where(cb.or(cb.like(root.get("name"),"%"+key+"%"),cb.like(root.get("companyName"),"%"+key+"%")));
+		
 		
 		Query query = session.createQuery(cr);
 		List<Mobile> results = query.getResultList();

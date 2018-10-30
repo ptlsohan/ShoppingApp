@@ -48,7 +48,8 @@ public class LaptopRepositoryImpl implements LaptopRepository {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<Laptop> cr = cb.createQuery(Laptop.class);
 		Root<Laptop> root = cr.from(Laptop.class);
-		cr.where(cb.like(root.get("name"),"%"+key+"%"));
+		cr.where(cb.or(cb.like(root.get("name"),"%"+key+"%"),cb.like(root.get("companyName"),"%"+key+"%")));
+		
 		
 		Query query = session.createQuery(cr);
 		List<Laptop> results = query.getResultList();

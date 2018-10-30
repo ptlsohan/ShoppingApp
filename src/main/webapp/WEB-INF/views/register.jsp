@@ -12,19 +12,25 @@
 </c:if>
 <div class="row justify-content-center" style="color:black;">
   <div class="col-md-8">
-<div class="card" style="margin:20px; padding:10px;" >
+<div class="card" style="margin:20px; padding:10px; background-color: rgba(0,0,0,.6);color:white;" >
   <div class="card-header">
-   <h4><tag:message code="login"></tag:message> </h4> 
+   <h4><tag:message code="register"></tag:message> </h4> 
   </div>
 <form action="validate" method="post" >
-<div class="form-group">
+
+<div class="row">
+              <div class="col-md-6 mb-3">
 <label for="firstname">First Name</label>
     <input type="text" class="form-control" id="firstname"  name="firstName" placeholder="firstname" required/>
 </div>
-  <div class="form-group">
+
+
+              <div class="col-md-6 mb-3">
+  
     <label for="lastname">Last Name</label>
     <input type="text" class="form-control" id="lastname"  name="lastName" placeholder="lastname" required>
 
+  </div>
   </div>
   <div class="form-group">
     <label for="uname"><tag:message code="username"></tag:message></label>
@@ -32,14 +38,17 @@
 
   </div>
   
-  <div class="form-group">
+  <div class="row">
+              <div class="col-md-6 mb-3">
     <label for="password"><tag:message code="password"></tag:message></label>
     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
   </div>
+ 
   
-  <div class="form-group">
-    <label for="confirm_password"><tag:message code="confirm_password"></tag:message></label>
-    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+ <div class="col-md-6 mb-3">
+    <label for="confirmPassword"><tag:message code="confirmPassword"></tag:message></label>
+    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+  </div>
   </div>
  <div class="radio">
   <label><input type="radio" name="role" value="CUSTOMER" checked><tag:message code="customer"></tag:message></label>
@@ -87,7 +96,7 @@ password: {
 required: true,
 minlength: 5
 },
-confirm_password: {
+confirmPassword: {
 required: true,
 minlength: 5,
 equalTo: password
@@ -103,5 +112,6 @@ confirm_password: {
 });
 
 </script>
+<script src="JS/autocomplete.js"></script>
 </body>
 </html>

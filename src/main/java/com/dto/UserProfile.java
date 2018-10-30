@@ -54,7 +54,7 @@ public class UserProfile {
 	@ManyToMany(mappedBy="profile",fetch=FetchType.EAGER)
 	private List<Address> address=new ArrayList<>();
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne
 	private User user;
 	
 	

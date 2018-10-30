@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateOrder(Order o) {
+	public int updateOrder(Order o) throws DBException {
 		// TODO Auto-generated method stub
 		return orep.updateOrder(o);
 	}
@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int addOrder(Order o) {
+	public int addOrder(Order o) throws DBException {
 		// TODO Auto-generated method stub
 		return orep.addOrder(o);
 	}

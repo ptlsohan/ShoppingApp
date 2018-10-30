@@ -12,7 +12,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Autowired AddressRepository addrep;
 	@Override
-	public List<Address> getAddresstById(int id) {
+	public Address getAddresstById(int id) {
 		// TODO Auto-generated method stub
 		return addrep.getAddresstById(id);
 	}
@@ -24,15 +24,21 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public int deleteAddress(int id) {
-		addrep.deleteAddress(id);
-		return 0;
+	public void deleteAddress(Address a) {
+		addrep.deleteAddress(a);
+		
 	}
 
 	@Override
 	public int addAddress(Address a) {
 		
 		return addrep.addAddress(a);
+	}
+
+	@Override
+	public void addOrUpdate(Address a) {
+		addrep.addOrUpdate(a);
+		
 	}
 
 }

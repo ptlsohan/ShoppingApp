@@ -7,8 +7,10 @@ import com.dto.Product;
 
 public interface AddressRepository {
 	
-	List<Address> getAddresstById(int id);
+	Address getAddresstById(int id);
 	int updateAddress(Address a);
-	int deleteAddress(int id);
+	void deleteAddress(Address a);
 	int addAddress(Address a);
+	
+	void addOrUpdate(Address a);
 }

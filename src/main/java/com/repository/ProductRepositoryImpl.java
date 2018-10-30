@@ -1,6 +1,7 @@
 package com.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dto.Mobile;
 import com.dto.Product;
+import com.dto.User;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository{
@@ -58,8 +60,15 @@ public class ProductRepositoryImpl implements ProductRepository{
 	}
 
 	@Override
-	public int updateProduct(int id) {
+	public int updateProduct(int id,int qty) {
 		// TODO Auto-generated method stub
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		String sql="update Product set quantity="+qty+" where id="+id;
+		Query q=session.createNativeQuery(sql);
+		q.executeUpdate();
+		tx.commit();
+		session.close();
 		return 0;
 	}
 
@@ -82,22 +91,50 @@ public class ProductRepositoryImpl implements ProductRepository{
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<Product> cr = cb.createQuery(Product.class);
 		Root<Product> root = cr.from(Product.class);
-		cr.where(cb.like(root.get("name"),"%"+key+"%"));
+		
+		cr.where(cb.or(cb.like(root.get("name"),"%"+key+"%"),cb.like(root.get("companyName"),"%"+key+"%")));
 		
 		Query query = session.createQuery(cr);
+		
 		List<Product> results = query.getResultList();
 		System.out.println("product search"+results);
+		
+		
+		tx.commit();
+		session.close();
+		return results;
+	}
+	
+	
+	@Override
+	public List<Product> searchApi(String key) {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Product> cr = cb.createQuery(Product.class);
+		Root<Product> root = cr.from(Product.class);
+		
+		cr.where(cb.or(cb.like(root.get("name"),"%"+key+"%"),cb.like(root.get("companyName"),"%"+key+"%")));
+		
+		Query query = session.createQuery(cr);
+		
+		List<Product> results = query.getResultList();
+		System.out.println("product search"+results);
+		
+		
+		tx.commit();
+		session.close();
 		return results;
 	}
 
 	@Override
 	public List<Product> getProductByPage(String category, int s) {
-		 s=s*5;
+		 s=s*6;
 		Session session = sf.openSession();
 		Query query=session.createQuery("from Product where category='"+category+"'");
 		
 		query.setFirstResult(s); 
-		query.setMaxResults(5);
+		query.setMaxResults(6);
 		List<Product> list=query.getResultList();
 		System.out.println(list);
 		session.close();
@@ -106,16 +143,46 @@ public class ProductRepositoryImpl implements ProductRepository{
 
 	@Override
 	public List<Product> getAllProductByPage(int i) {
-		 i=i*5;
+		 i=i*6;
 			Session session = sf.openSession();
 			Query query=session.createQuery("from Product");
 			
 			query.setFirstResult(i); 
-			query.setMaxResults(5);
+			query.setMaxResults(6);
 			List<Product> list=query.getResultList();
 			System.out.println(list);
 			session.close();
 			return list;
+	}
+
+	@Override
+	public int getQty(int id) {
+		
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+//		CriteriaBuilder cb = session.getCriteriaBuilder();
+//		CriteriaQuery<Integer> cr = cb.createQuery(Integer.class);
+//		Root<Product> root = cr.from(Product.class);
+//		cr.select(root.get("quantity"));
+//		cr.where(cb.equal(root.get("id"),id));
+//		Query query = session.createQuery(cr);
+//		
+//		int qty=query.getFirstResult();
+		
+		String sql="from Product where id="+id; 
+		Optional<Product> product=  session.createQuery(sql).uniqueResultOptional();
+		product.orElse(new Product());
+		int ret=product.get().getQuantity();
+		System.out.println("qty in rep"+ret);
+		tx.commit();
+		session.close();
+		return ret;
+	}
+
+	@Override
+	public int updateProduct(int id) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

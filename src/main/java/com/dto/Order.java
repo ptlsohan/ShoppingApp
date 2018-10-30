@@ -55,7 +55,7 @@ public class Order {
 	private Map<Product, Integer> productList =new LinkedHashMap<>();;
 	private double totalAmt;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	private Address address;
 	
 	@ManyToOne

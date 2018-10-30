@@ -37,13 +37,13 @@ public class UserImpl implements UserRepository {
 		return 0;
 	}
 
-	public int updateUser(User u) {
+	public void updateUser(User u) {
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		session.merge(u);
+		session.update(u);
 		tx.commit();
 		session.close();
-		return 0;
+		
 	}
 
 	@Override

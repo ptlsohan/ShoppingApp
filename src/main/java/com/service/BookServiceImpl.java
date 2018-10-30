@@ -15,43 +15,43 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> getAllBook() {
 		// TODO Auto-generated method stub
-		return null;
+		return brep.getAllBook();
 	}
 
 	@Override
 	public List<Book> getBookByCategory(String category) {
 		// TODO Auto-generated method stub
-		return null;
+		return brep.getBookByCategory(category);
 	}
 
 	@Override
 	public List<Book> searchProduct(String key) {
 		// TODO Auto-generated method stub
-		return null;
+		return brep.searchProduct(key);
 	}
 
 	@Override
 	public Book getBookById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return brep.getBookById(id);
 	}
 
 	@Override
 	public int updateBook(Book b) {
 		// TODO Auto-generated method stub
-		return 0;
+		return brep.updateBook(b);
 	}
 
 	@Override
 	public int deleteProduct(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return brep.deleteProduct(id);
 	}
 
 	@Override
 	public int addProduct(Book b) {
 		// TODO Auto-generated method stub
-		return 0;
+		return brep.addProduct(b);
 	}
 
 }

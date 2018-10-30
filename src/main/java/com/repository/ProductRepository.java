@@ -11,8 +11,14 @@ public interface ProductRepository {
 	List<Product> getProductByPage(String category,int s);
 	List<Product> searchProduct(String key);
 	Product getProductById(int id);
+	
+	
+
 	int updateProduct(int id);
 	int deleteProduct(int id);
 	int addProduct(Product p);
+	int getQty(int id);
+	int updateProduct(int id, int qty);
+	List<Product> searchApi(String key);
 	
 }

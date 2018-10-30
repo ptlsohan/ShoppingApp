@@ -1,14 +1,17 @@
 package com.dto;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
-import com.validator.ConfirmPassword;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import org.springframework.data.annotation.Version;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,6 +27,8 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Entity
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Product {
 	
@@ -35,13 +40,16 @@ public class Product {
 	private String name;
 	@NotBlank
 	private String companyName;
-	@Pattern(regexp="\\d*\\.?\\d+")
+	//@Pattern(regexp="\\d*\\.?\\d+")
 	private double price;
 	private String image;
-	@Pattern(regexp="\\d+")
+//	@Pattern(regexp="\\d+")
 	private int quantity;
 	@NotBlank
 	private String category;
+	
+	@Version
+	private int version;
 	
 	
 	

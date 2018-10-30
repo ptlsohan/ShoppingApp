@@ -100,12 +100,13 @@ public class HomeController {
 //		mv.addObject("list",products);
 //		return mv;
 //	}
-	@RequestMapping("/{category}")
+	@RequestMapping(path="/{category}",params= {"start"})
 	public ModelAndView getMobile(@PathVariable("category") String category,@RequestParam("start")int s) {
 		
 		ModelAndView mv= new ModelAndView("displayProduct");
 		List<Product> products= ps.getProductByPage(category,s);
 		mv.addObject("category",category);
+		System.out.println("Category"+category);
 		mv.addObject("list",products);
 		return mv;
 		
@@ -115,8 +116,11 @@ public class HomeController {
 	@RequestMapping("/{category}/{id}")
 	public ModelAndView getProductInfo(@PathVariable("category") String category,@PathVariable("id") int id) {
 		ModelAndView mv = new ModelAndView("productInfo");
+		System.out.println("Category"+category);
 		Product p=null;
 		if("mobile".equalsIgnoreCase(category)) {
+			int qty=ps.getQty(id);
+			System.out.println("quantity"+qty);
 			p=mserv.getMobileById(id);
 			mv.addObject("product",p);
 		}
@@ -125,6 +129,11 @@ public class HomeController {
 			mv.addObject("product",p);
 		}else if("book".equalsIgnoreCase(category)) {
 			p=bserv.getBookById(id);
+			System.out.println("req methd"+p);
+			mv.addObject("product",p);
+		}
+		else if("laptop".equalsIgnoreCase(category)) {
+			p=lserv.getLaptopById(id);
 			mv.addObject("product",p);
 		}
 		
@@ -182,11 +191,20 @@ public class HomeController {
 	}
 	
 	@RequestMapping(path="/validate", method=RequestMethod.POST)	
-	public ModelAndView isValid(@Valid @ModelAttribute("user") User user,@Valid @ModelAttribute("profile") UserProfile profile,
-		 BindingResult result) {	
+	public ModelAndView isValid(@Valid @ModelAttribute("user") User user, BindingResult result,@Valid @ModelAttribute("profile") UserProfile profile,
+		 BindingResult result1) {	
 		if(result.hasErrors()) {
+			System.out.println("regisetr error");
 			ModelAndView mv= new ModelAndView();
 			mv.addObject("error",result.getAllErrors());
+			mv.setViewName("register");
+			return mv;
+			
+		}
+		if(result1.hasErrors()) {
+			System.out.println("regisetr error");
+			ModelAndView mv= new ModelAndView();
+			mv.addObject("error",result1.getAllErrors());
 			mv.setViewName("register");
 			return mv;
 			
@@ -195,9 +213,16 @@ public class HomeController {
 		ModelAndView mv= new ModelAndView();
 		//int id=us.addUser(user);
 		us.addUser(user);
+
 		profile.setUser(user);
 		user.setUserProfile(profile);
-		pserv.addUserProfile(profile);
+		int id=pserv.addUserProfile(profile);
+		
+		
+	//	profile.setProfileId(id);
+		Address address= new Address();
+		address.setProfile(profile);
+		addserv.addAddress(address);
 		//user.setUserId(id);
 		mv.addObject("user",user);
 		mv.setViewName("login");
@@ -205,7 +230,7 @@ public class HomeController {
 	}
 	@InitBinder
 	public void init(WebDataBinder binder) {
-		binder.setDisallowedFields("confirm_password");
+		//binder.setDisallowedFields("confirm_password");
 	}
 	
 }
