@@ -11,7 +11,7 @@ public interface ProductService {
 	List<Product> searchProduct(String key);
 	List<Product> getProductByPage(String category,int s);
 	Product getProductById(int id);
-	int updateProduct(int id);
+	void updateProduct(Product p);
 	int deleteProduct(int id);
 	int addProduct(Product p);
 	int getQty(int id);

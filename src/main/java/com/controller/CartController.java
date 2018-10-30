@@ -246,9 +246,11 @@ public class CartController {
 			User ucart=cs.getProductById(user.getUserId());
 			Map<Product,Integer> list =ucart.getCart().getCartList();
 			order.setProductList(list);
+			System.out.println("address id"+ address.getAddressId());
 			addserv.addAddress(address);
 			order.setAddress(address);
-			//System.out.println("address id"+ address.getAddressId());
+			
+			System.out.println("address street"+ address.getStreet());
 			order.setCard(card);
 			order.setUser(user);
 			int id=os.addOrder(order);

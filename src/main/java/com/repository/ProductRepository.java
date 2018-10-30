@@ -14,7 +14,7 @@ public interface ProductRepository {
 	
 	
 
-	int updateProduct(int id);
+	void updateProduct(Product p);
 	int deleteProduct(int id);
 	int addProduct(Product p);
 	int getQty(int id);

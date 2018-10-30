@@ -67,6 +67,6 @@
 
 
 </script>
-<script src="JS/autocomplete.js"></script>
+<script src="${pageContext.request.contextPath}/JS/autocomplete.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -31,11 +32,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
 
+//@Import({HibernateConfig.class,DatabaseConfig.class})
 
-@Import(HibernateConfig.class)
+
+@Import({DatabaseConfig.class})
 @Configuration
 @EnableWebMvc
 @ComponentScan("com")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+
 public class AppConfig  implements WebMvcConfigurer {
 	
 	@Bean

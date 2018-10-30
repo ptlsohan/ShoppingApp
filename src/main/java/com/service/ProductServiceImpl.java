@@ -32,9 +32,9 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public int updateProduct(int id) {
+	public void updateProduct(Product p) {
 		// TODO Auto-generated method stub
-		return 0;
+		prep.updateProduct(p);;
 	}
 
 	@Override

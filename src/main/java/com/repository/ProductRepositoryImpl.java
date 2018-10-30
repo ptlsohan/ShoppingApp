@@ -14,7 +14,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dto.Mobile;
 import com.dto.Product;
@@ -27,7 +30,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 	
 	@Autowired SessionFactory sf;
 
-	
+	@Autowired HibernateTemplate template;
 
 	@Override
 	public List<Product> getAllProduct() {
@@ -50,12 +53,13 @@ public class ProductRepositoryImpl implements ProductRepository{
 	}
 
 	@Override
+	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public Product getProductById(int id) {
-		Session session = sf.openSession();
-		Transaction tx = session.beginTransaction();
-		Product p=session.get(Product.class, id);
-		tx.commit();
-		session.close();
+//		Session session = sf.openSession();
+//		Transaction tx = session.beginTransaction();
+		Product p=template.get(Product.class, id);
+//		tx.commit();
+//		session.close();
 		return p;
 	}
 
@@ -180,9 +184,10 @@ public class ProductRepositoryImpl implements ProductRepository{
 	}
 
 	@Override
-	public int updateProduct(int id) {
+	@Transactional
+	public void updateProduct(Product p) {
 		// TODO Auto-generated method stub
-		return 0;
+		template.update(p);
 	}
 
 	

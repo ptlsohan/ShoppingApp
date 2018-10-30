@@ -1,13 +1,13 @@
-let result;
+let value;
 $(document).ready(function() {
 	$("button[type=button]").prop("disabled",true);
 	$('input[type=radio][name=select]').change(function(){
 		console.log(this.value);
 		if(this.value==='selectAddress'){
-			$("fieldset").prop("disabled",true);
+			$("fieldset").prop("readOnly",true);
 			$("button[type=button]").prop("disabled",false);
 		}else if(this.value==='newAddress'){
-			$("fieldset").prop("disabled",false);
+			$("fieldset").prop("readOnly",false);
 			$("button[type=button]").prop("disabled",true);
 			$('#addressId').val(null);
 	    	$('#street').val(null);
@@ -29,23 +29,23 @@ $(document).ready(function() {
 	    	dataType: 'json',
 	    	success: function(data) {
 	    	console.log(data['street']);
-	    	result=data;
-	    	console.log('result',result.addressId);
-	    	$('#addressId').val(result['addressId']);
-	    	$('#street').val(result['street']);
-			$('#apt').val(result['apt']);
-			$('#city').val(result['city']);
-			$('#state').val(result['state']);
-			$('#zip').val(result['zip']);
-			$('#country').val(result['country']);
-			$('#phone').val(result['phone']);
+	    	value=data;
+	    	console.log('result',value.addressId);
+	    	$('#addressId').val(value['addressId']);
+	    	$('#street').val(value['street']);
+			$('#apt').val(value['apt']);
+			$('#city').val(value['city']);
+			$('#state').val(value['state']);
+			$('#zip').val(value['zip']);
+			$('#country').val(value['country']);
+			$('#phone').val(value['phone']);
 	    	},
 	    	error: function(jqXHR, textStatus, errorThrown) {
 	    	console.log(textStatus); //error logging
 	    	}
 	    	});
 		
-		
+		console.log('result',value.street);
 		
 		
 		
