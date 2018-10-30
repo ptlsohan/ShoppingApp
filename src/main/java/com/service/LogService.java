@@ -14,7 +14,7 @@ public class LogService {
 
 	Logger logger = LoggerFactory.getLogger(LogService.class);
 	
-	@Around(value = "within( com.java.controller.*)")
+	@Around(value = "within( com.controller.*)")
 	public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
 		logger.info("Entering method " + joinPoint.getSignature());
 		Object o = joinPoint.proceed();
