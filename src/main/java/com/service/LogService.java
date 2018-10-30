@@ -3,8 +3,7 @@ package com.service;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Aspect
 public class LogService {
 
-	Logger logger = LoggerFactory.getLogger(LogService.class);
+	Logger logger = Logger.getLogger(LogService.class);
 	
 	@Around(value = "within( com.controller.*)")
 	public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
