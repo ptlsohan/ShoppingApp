@@ -20,5 +20,6 @@ public interface ProductRepository {
 	int getQty(int id);
 	int updateProduct(int id, int qty);
 	List<Product> searchApi(String key);
+	long getTotalCount();
 	
 }

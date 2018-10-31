@@ -33,6 +33,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> getOrderByUserId(int id) {
 		Session session = sf.openSession();

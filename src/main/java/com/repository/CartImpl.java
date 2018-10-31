@@ -17,6 +17,7 @@ public class CartImpl implements CartRepository {
 
 	@Autowired SessionFactory sf;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getAllProduct() {
 		Session session = sf.openSession();

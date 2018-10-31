@@ -3,7 +3,6 @@ package com.service;
 import java.util.List;
 
 import com.dto.Book;
-import com.dto.Laptop;
 
 public interface BookService {
 	List<Book> getAllBook();
@@ -13,4 +12,5 @@ public interface BookService {
 	int updateBook(Book b );
 	int deleteProduct(int id);
 	int addProduct(Book b );
+	long getTotalCount();
 }

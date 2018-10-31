@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
-
+ <%@taglib uri="http://www.springframework.org/tags" prefix="tag" %>
  <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp"></jsp:include>
 
@@ -26,7 +26,7 @@
 <div class="w3-primary">
   <button id="openNav" class="w3-button w3-blue w3-xlarge" onclick="w3_open()">&#9776;</button>
   <div class="w3-container">
-    <h1>Add Address</h1>
+    <h1>Edit Address</h1>
   </div>
 </div>
 <div class="w3-container">
@@ -38,32 +38,32 @@
 	 <fieldset >
 	  <input type="hidden" id="addressId" name="addressId" value="${address.addressId}"> 
             <div class="mb-3">
-              <label for="street">Street</label>
+              <label for="street"><tag:message code="street"></tag:message></label>
               <input type="text" class="form-control" id="street" name="street" value="${address.street}">
               
             </div>
 
             <div class="mb-3">
-              <label for="apt">Apt </label>
+              <label for="apt"><tag:message code="apt"></tag:message> </label>
               <input type="text" class="form-control" id="apt" name="apt" value="${address.apt}">
             </div>
             
             <div class="mb-3">
-              <label for="city">City </label>
+              <label for="city"><tag:message code="city"></tag:message> </label>
               <input type="text" class="form-control" id="city" name="city" value="${address.city}">
             </div>
 
             <div class="row">
               <div class="col-md-5 mb-3">
-                <label for="state">State </label>
+                <label for="state">S<tag:message code="state"></tag:message> </label>
               <input type="text" class="form-control" id="state" name="state"  value="${address.state}">
               </div>
               <div class="col-md-4 mb-3">
-                <label for="country">Country </label>
+                <label for="country"><tag:message code="country"></tag:message> </label>
               <input type="text" class="form-control" id="country" name="country"  value="${address.country}">
               </div>
               <div class="col-md-3 mb-3">
-                <label for="zip">Zip</label>
+                <label for="zip"><tag:message code="zip"></tag:message></label>
                 <input type="text" class="form-control" id="zip" name="zip"  value="${address.zip}"">
                 <div class="invalid-feedback">
                   Zip code required.
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="mb-3">
-              <label for="phone">Phone </label>
+              <label for="phone"><tag:message code="phone"></tag:message></label>
               <input type="text" class="form-control" id="phone" name="phone"  value="${address.phone}">
             </div>
             <input type="submit" class="btn btn-primary" value="update"/>

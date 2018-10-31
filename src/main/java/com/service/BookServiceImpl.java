@@ -54,4 +54,10 @@ public class BookServiceImpl implements BookService {
 		return brep.addProduct(b);
 	}
 
+	@Override
+	public long getTotalCount() {
+		System.out.println("book tottal");
+		return brep.getTotalCount();
+	}
+
 }

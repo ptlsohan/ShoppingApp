@@ -15,5 +15,6 @@ public interface MobileRepository {
 	int updateMobile (Mobile  mobile );
 	int deleteProduct(int id);
 	int addProduct(Mobile mobile );
+	long getTotalCount();
 	
 }

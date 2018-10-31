@@ -16,18 +16,18 @@
   <div class="card-header">
    <h4><tag:message code="register"></tag:message> </h4> 
   </div>
-<form action="validate" method="post" >
+<form id="register" action="validate" method="post" >
 
 <div class="row">
               <div class="col-md-6 mb-3">
-<label for="firstname">First Name</label>
+<label for="firstname"><tag:message code="firstName"></tag:message></label>
     <input type="text" class="form-control" id="firstname"  name="firstName" placeholder="firstname" required/>
 </div>
 
 
               <div class="col-md-6 mb-3">
   
-    <label for="lastname">Last Name</label>
+    <label for="lastname"><tag:message code="lastName"></tag:message></label>
     <input type="text" class="form-control" id="lastname"  name="lastName" placeholder="lastname" required>
 
   </div>
@@ -63,15 +63,15 @@
     <input type="number" class="form-control" id="age"  name="age" placeholder="" max="100" min="0" />
 
   </div>
-<label for="gender">Gender</label>
+<label for="gender"><tag:message code="gender"></tag:message></label>
 <div class="radio" id="gender">
-  <label><input type="radio" name="gender" value="MALE" checked>male</label>
+  <label><input type="radio" name="gender" value="MALE" checked><tag:message code="male"></tag:message></label>
 </div>
 <div class="radio">
-  <label><input type="radio" name="gender" value="FEMALE">female</label>
+  <label><input type="radio" name="gender" value="FEMALE"><tag:message code="female"></tag:message></label>
 </div>
 <div class="radio">
-  <label><input type="radio" name="gender" value="OTHER">other</label>
+  <label><input type="radio" name="gender" value="OTHER"><tag:message code="other"></tag:message></label>
 </div>
   
   
@@ -84,32 +84,7 @@
 </div>
 </div>
 </div>
-<script>
-$().ready(function(){
-$('form').validate({
-rules: {
-uname: {
-required: true,
-minlength: 2
-},
-password: {
-required: true,
-minlength: 5
-},
-confirmPassword: {
-required: true,
-minlength: 5,
-equalTo: password
-}
-},
-messages: {
-confirm_password: {
-	equalTo: "please enter the same password"
-}
-}
-
-});
-});
+<script src="JS/formvalidation.js">
 
 </script>
 <script src="JS/autocomplete.js"></script>

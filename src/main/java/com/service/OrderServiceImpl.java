@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	public int addOrder(Order o) throws DBException {
 		for(Map.Entry<Product, Integer> entry: o.getProductList().entrySet()) {
-			int qty=ps.getQty(entry.getKey().getId());
+			
 			Product product=ps.getProductById(entry.getKey().getId());
 			if(product.getQuantity()-entry.getValue()<0) {
 				throw new DBException("Product not available"+entry.getKey().getName());

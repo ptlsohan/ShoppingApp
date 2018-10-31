@@ -45,7 +45,7 @@ public ModelAndView addAddress(HttpSession session,@ModelAttribute("address") Ad
 	address.setProfile(user.getUserProfile());
 	addserv.addAddress(address);
 	user.getUserProfile().getAddress().add(address);
-
+	session.setAttribute("addMsg", "Address Added!");
 	return mv;
 }
 
@@ -92,6 +92,7 @@ public ModelAndView updateAddress(HttpSession session,@ModelAttribute("address")
 	address.setProfile(user.getUserProfile());
 	addserv.updateAddress(address);
 	user.getUserProfile().getAddress().add(address);
+	session.setAttribute("addMsg", "Address Updated!");
 	
 	return mv;
 	
@@ -108,6 +109,7 @@ public ModelAndView removeAddress(HttpSession session,@RequestParam("id") int id
 	//address.setProfile(user.getUserProfile());
 	Address address=addserv.getAddresstById(id);
 	addserv.deleteAddress(address);
+	session.setAttribute("addMsg", "Address Deleted!");
 	//user.getUserProfile().getAddress().add(address);
 	
 	return mv;

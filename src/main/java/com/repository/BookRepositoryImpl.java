@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Book;
-import com.dto.Laptop;
-import com.dto.Mobile;
 
 @Repository
 public class BookRepositoryImpl implements BookRepository {
@@ -23,6 +21,7 @@ public class BookRepositoryImpl implements BookRepository {
 	@Autowired SessionFactory sf;
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> getAllBook() {
 		Session session = sf.openSession();
@@ -33,6 +32,7 @@ public class BookRepositoryImpl implements BookRepository {
 		return products;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> getBookByCategory(String category) {
 		Session session = sf.openSession();
@@ -71,6 +71,7 @@ public class BookRepositoryImpl implements BookRepository {
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> searchProduct(String key) {
 		Session session = sf.openSession();
@@ -83,7 +84,29 @@ public class BookRepositoryImpl implements BookRepository {
 		
 		Query query = session.createQuery(cr);
 		List<Book> results = query.getResultList();
+		tx.commit();
+		session.close();
 		return results;
+	}
+
+	@Override
+	public long getTotalCount() {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<Book> root = cr.from(Book.class);
+		cr.select(cb.count(root));
+		
+
+		Query query = session.createQuery(cr);
+		
+		Long result = (Long) query.getSingleResult();
+		
+		System.out.println("book tottal"+result);
+		tx.commit();
+		session.close();
+		return result;
 	}
 
 }

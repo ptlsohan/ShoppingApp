@@ -8,7 +8,7 @@
       <div class="row justify-content-center">
      
       <div class="card col-sm-5 mt-5  border-0" style="width: 18rem;background-color: rgba(0,0,0,.5); ">
-        <img class="card-img-top" src="${pageContext.request.contextPath}/images/product.png" style="max-width:100%;max-height:100%;" width="300px" height="400px" alt=".." class="rounded mx-auto d-block col-sm-5 m-1 border-0" alt="...">
+        <img class="card-img-top mt-2" src="${pageContext.request.contextPath}/images/product/${product.image }" style="max-width:100%;max-height:100%;" width="300px" height="400px" alt=".." class="rounded mx-auto d-block col-sm-5 m-1 border-0" alt="...">
 
       </div>
       <div class="card col-sm-5 mt-5 border-0 " style="width: 18rem;background-color: rgba(0,0,0,.5); color:white; ">

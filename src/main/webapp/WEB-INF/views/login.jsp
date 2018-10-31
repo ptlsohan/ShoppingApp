@@ -19,10 +19,10 @@
   <div class="card-header">
    <h4><tag:message code="loginHead"></tag:message> </h4> 
   </div>
-    <form action="loginValidate" method="post" >
+    <form id="login" action="loginValidate" method="post" >
   <div class="form-group">
-    <label for="uname"><tag:message code="username"></tag:message></label>
-    <input type="text" class="form-control" id="uname" name="username"  placeholder="Username">
+    <label for="username"><tag:message code="username"></tag:message></label>
+    <input type="text" class="form-control" id="username" name="username"  placeholder="Username">
 
   </div>
   
@@ -32,12 +32,12 @@
   </div>
   
 
- <div class="radio">
+ <%-- <div class="radio">
   <label><input type="radio" name="role" value="CUSTOMER" checked><tag:message code="customer"></tag:message></label>
 </div>
 <div class="radio">
   <label><input type="radio" name="role" value="ADMIN"><tag:message code="admin"></tag:message></label>
-</div>
+</div> --%>
   <button type="submit" class="btn btn-primary"><tag:message code="login"></tag:message></button>
 </form>
   </div>
@@ -46,7 +46,7 @@
   </div>
   
 </div>
-<!-- <script src="./JS/loginValidation.js"></script> -->
+ <script src="JS/loginValidation.js"></script> 
 <script src="JS/autocomplete.js"></script>
 </body>
 

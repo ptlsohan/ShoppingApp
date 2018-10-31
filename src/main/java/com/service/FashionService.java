@@ -3,7 +3,6 @@ package com.service;
 import java.util.List;
 
 import com.dto.Fashion;
-import com.dto.Product;
 
 public interface FashionService {
 	List<Fashion> getAllFashion();
@@ -13,4 +12,5 @@ public interface FashionService {
 	int updateFashion (Fashion  f );
 	int deleteProduct(int id);
 	int addProduct(Fashion  f );
+	long getTotalCount();
 }

@@ -8,20 +8,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dto.Mobile;
 import com.dto.Product;
-import com.dto.User;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository{
@@ -32,6 +28,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 
 	@Autowired HibernateTemplate template;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getAllProduct() {
 		Session session = sf.openSession();
@@ -42,6 +39,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 		return products;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getProductByCategory(String category) {
 		Session session = sf.openSession();
@@ -88,6 +86,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> searchProduct(String key) {
 		Session session = sf.openSession();
@@ -101,7 +100,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 		Query query = session.createQuery(cr);
 		
 		List<Product> results = query.getResultList();
-		System.out.println("product search"+results);
+		
 		
 		
 		tx.commit();
@@ -110,6 +109,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> searchApi(String key) {
 		Session session = sf.openSession();
@@ -123,7 +123,6 @@ public class ProductRepositoryImpl implements ProductRepository{
 		Query query = session.createQuery(cr);
 		
 		List<Product> results = query.getResultList();
-		System.out.println("product search"+results);
 		
 		
 		tx.commit();
@@ -131,6 +130,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 		return results;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getProductByPage(String category, int s) {
 		 s=s*6;
@@ -145,6 +145,7 @@ public class ProductRepositoryImpl implements ProductRepository{
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Product> getAllProductByPage(int i) {
 		 i=i*6;
@@ -159,19 +160,13 @@ public class ProductRepositoryImpl implements ProductRepository{
 			return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int getQty(int id) {
 		
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-//		CriteriaBuilder cb = session.getCriteriaBuilder();
-//		CriteriaQuery<Integer> cr = cb.createQuery(Integer.class);
-//		Root<Product> root = cr.from(Product.class);
-//		cr.select(root.get("quantity"));
-//		cr.where(cb.equal(root.get("id"),id));
-//		Query query = session.createQuery(cr);
-//		
-//		int qty=query.getFirstResult();
+
 		
 		String sql="from Product where id="+id; 
 		Optional<Product> product=  session.createQuery(sql).uniqueResultOptional();
@@ -183,6 +178,26 @@ public class ProductRepositoryImpl implements ProductRepository{
 		return ret;
 	}
 
+	@Override
+	public long getTotalCount() {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<Product> root = cr.from(Product.class);
+		cr.select(cb.count(root));
+		
+
+		Query query = session.createQuery(cr);
+		
+		Long result = (Long) query.getSingleResult();
+		
+		
+		tx.commit();
+		session.close();
+		return result;
+	}
+	
 	@Override
 	@Transactional
 	public void updateProduct(Product p) {

@@ -1,12 +1,9 @@
 package com.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dto.Cart;
-import com.dto.Product;
 import com.dto.User;
 import com.repository.CartRepository;
 
@@ -14,17 +11,7 @@ import com.repository.CartRepository;
 public class CartServiceImpl implements CartService {
 
 	@Autowired CartRepository crep;
-	@Override
-	public List<Product> getAllProduct() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public List<String> getProductByCategory(String category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public User getProductById(int id) {
@@ -33,9 +20,9 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public int updateProduct(Cart c) {
+	public void updateProduct(Cart c) {
 		crep.updateProduct(c);
-		return 0;
+	
 	}
 
 	@Override

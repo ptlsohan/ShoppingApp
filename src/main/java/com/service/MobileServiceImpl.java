@@ -56,6 +56,12 @@ public class MobileServiceImpl implements MobileService{
 		return mrep.searchProduct(key);
 	}
 
+	@Override
+	public long getTotalCount() {
+		// TODO Auto-generated method stub
+		return mrep.getTotalCount();
+	}
+
 	
 
 }

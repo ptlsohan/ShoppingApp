@@ -1,9 +1,6 @@
 package com.repository;
 
-import java.util.List;
-
 import com.dto.Address;
-import com.dto.Product;
 
 public interface AddressRepository {
 	

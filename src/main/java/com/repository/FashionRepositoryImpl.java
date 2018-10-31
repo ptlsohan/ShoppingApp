@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Fashion;
-import com.dto.Mobile;
-import com.dto.Product;
 
 
 @Repository
@@ -35,6 +33,7 @@ public class FashionRepositoryImpl implements FashionRepository {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Fashion> searchProduct(String key) {
 		Session session = sf.openSession();
@@ -47,6 +46,9 @@ public class FashionRepositoryImpl implements FashionRepository {
 		
 		Query query = session.createQuery(cr);
 		List<Fashion> results = query.getResultList();
+		tx.commit();
+		session.close();
+		
 		return results;
 		
 	}
@@ -77,6 +79,26 @@ public class FashionRepositoryImpl implements FashionRepository {
 	public int addProduct(Fashion f) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public long getTotalCount() {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<Fashion> root = cr.from(Fashion.class);
+		cr.select(cb.count(root));
+		
+
+		Query query = session.createQuery(cr);
+		
+		Long result = (Long) query.getSingleResult();
+		
+		
+		tx.commit();
+		session.close();
+		return result;
 	}
 
 }

@@ -9,10 +9,10 @@
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
-							<th style="width:50%">Product</th>
+							<th style="width:45%">Product</th>
 							<th style="width:10%">Price</th>
-							<th style="width:8%">Quantity</th>
-							<th style="width:22%" class="text-center">Subtotal</th>
+							<th style="width:28%">Quantity</th>
+							<th style="width:7%" class="text-center">Subtotal</th>
 							<th style="width:10%"></th>
 						</tr>
 					</thead>
@@ -21,18 +21,37 @@
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-2 hidden-xs"><img src="${pageContext.request.contextPath}/images/product/${entry.key.image }" width="90" height="90" alt="..." class="img-responsive"/></div>
 									<div class="col-sm-10">
-										<h4 class="nomargin">${entry.key.companyName} ${entry.key.name}</h4>
+										<h4 class="nomargin">${entry.key.name}</h4>
 										<p></p>
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">$${entry.key.price}</td>
+							<td data-th="Price" >$${entry.key.price}</td>
 							<td data-th="Quantity">
-								<input type="number" readOnly class="form-control text-center" value="${entry.value}">
+							<div class="input-group mb-2 w-50">
+							<input type="hidden" id="pid" value="${entry.key.id}" >
+        <div class="input-group-prepend">
+         <span class="input-group-btn">
+        
+               
+               <button type="button" onclick="minusQuantity(${entry.key.id},'${entry.key.price}')" class="btn btn-danger btn-number"  id='removeItem' data-type="minus" data-field="quant[2]">
+               <span class="glyphicon glyphicon-minus">-</span>
+              </button>
+          </span>
+          </div>
+								<input type="number" id="quantity${entry.key.id}"   class="form-control text-center" value="${entry.value}">
+							<div class="input-group-append">
+        <span class="input-group-btn">
+              <button type="button" onclick="addQuantity(${entry.key.id},'${entry.key.price}')" id='addItem'class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+                  <span class="glyphicon glyphicon-plus">+</span>
+              </button>
+          </span>
+          </div>
+	</div>
 							</td>
-							<td data-th="Subtotal" class="text-center">${entry.key.price*entry.value}</td>
+							<td data-th="Subtotal" class="text-center" id="totalAmt${entry.key.id}">${entry.key.price*entry.value}</td>
 							<td class="actions" data-th="">
 							
 								 
@@ -67,12 +86,12 @@
 					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
-							<td class="text-center"><strong>Total $${total}</strong></td>
+							
 						</tr>
 						<tr>
 							<td><a href="home" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong>Total $${total}</strong></td>
+							<!-- <td class="hidden-xs text-center"><strong>Total $${total}</strong></td> -->
 							<td><a href="checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
@@ -84,5 +103,79 @@
 
 
 <script src="JS/autocomplete.js"></script>
+<!-- <script src="JS/updateCart.js"></script> -->
+<script type="text/javascript">
+function addQuantity(id,price) {
+	console.log(id);
+	
+	let ele='#quantity'+id;
+	let val=$(ele).val();
+	let ele1='#totalAmt'+id;
+	console.log(val);
+	
+	if(val>=10){
+		
+	}else{
+		
+	let sum=parseInt(val)+1;
+	$(ele).attr('value',sum);
+	let total=$(ele).val()*price;
+	console.log('total',total);
+	$(ele1).html(total);
+	//$("button[type=submit]").prop("disabled",false);
+	$.ajax({
+	    url: 'updateAddCart?id='+id,
+	    type: 'POST',
+	    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	    success: function (response) {
+	    	 console.log('success');
+	    },
+	    error: function () {
+	        console.log('error');
+	    }
+	});
+	
+	}
+}
+function minusQuantity(id,price) {
+	console.log(id);
+	
+	let ele='#quantity'+id;
+	let ele1='#totalAmt'+id;
+	console.log(ele1);
+	let val=$(ele).val();
+	console.log(val);
+	
+	
+	if(val<='1'){
+		$("input #addButton").prop("disabled",true);
+	}else{
+		
+		let sum=parseInt(val)-1;
+
+		if(sum<='1'){
+			$("input #addButton").prop("disabled",true);
+		}
+		
+		$(ele).attr('value',sum);
+		let total=$(ele).val()*price;
+		console.log('total',total);
+		$(ele1).html(total);
+		$.ajax({
+		    url: 'updateCart?id='+id,
+		    type: 'POST',
+	
+		    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		    success: function (response) {
+		    	 console.log('success');
+		    },
+		    error: function () {
+		    	 console.log('error');
+		    }
+		});
+		
+	}
+}
+</script>
 </body>
 </html>

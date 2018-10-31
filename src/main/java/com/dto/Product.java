@@ -11,10 +11,6 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-
-import javax.persistence.Version;
-
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

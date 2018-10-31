@@ -1,6 +1,5 @@
 package com.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
@@ -17,10 +16,7 @@ public class UserImpl implements UserRepository {
 	@Autowired 
 	SessionFactory sf;
 	
-	public List<User> getAllUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	public int addUser(User user) {
 		Session session = sf.openSession();
@@ -32,9 +28,13 @@ public class UserImpl implements UserRepository {
 		return id;
 	}
 
-	public int deleteUser(int id) {
-		
-		return 0;
+	public void deleteUser(User user) {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		 session.delete(user);
+		 tx.commit();
+		session.close();
+	
 	}
 
 	public void updateUser(User u) {
@@ -46,6 +46,7 @@ public class UserImpl implements UserRepository {
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByUName(String uname) {
 		Session session = sf.openSession();
@@ -53,7 +54,6 @@ public class UserImpl implements UserRepository {
 		String sql="from User where username='"+uname+"'";
 		Optional<User> user=  session.createQuery(sql).uniqueResultOptional();
 		user.orElse(new User());
-	//	System.out.println(user.getUsername());
 		tx.commit();
 		session.close();
 		return user.get();

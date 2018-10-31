@@ -2,7 +2,7 @@ package com.controller;
 
 import java.util.List;
 
-
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +106,29 @@ public class HomeController {
 		ModelAndView mv= new ModelAndView("displayProduct");
 		List<Product> products= ps.getProductByPage(category,s);
 		mv.addObject("category",category);
-		System.out.println("Category"+category);
+		long total=0;
+		if("mobile".equalsIgnoreCase(category)) {
+		 total=mserv.getTotalCount();
+			
+			
+		}
+		else if("fashion".equalsIgnoreCase(category)) {
+			total=fserv.getTotalCount();
+		}else if("book".equalsIgnoreCase(category)) {
+			total=bserv.getTotalCount();
+			
+		}
+		else if("laptop".equalsIgnoreCase(category)) {
+			total=lserv.getTotalCount();
+		}
+		
+		
+		
+		double val=(double)total/6;
+		int totalPage=(int) Math.ceil(val);
+		
+		mv.addObject("total",totalPage);
+
 		mv.addObject("list",products);
 		return mv;
 		
@@ -129,7 +151,6 @@ public class HomeController {
 			mv.addObject("product",p);
 		}else if("book".equalsIgnoreCase(category)) {
 			p=bserv.getBookById(id);
-			System.out.println("req methd"+p);
 			mv.addObject("product",p);
 		}
 		else if("laptop".equalsIgnoreCase(category)) {
@@ -144,8 +165,11 @@ public class HomeController {
 	
 	@RequestMapping("/search")
 	public ModelAndView searchProduct(@RequestParam("category")String category,@RequestParam("keyword")String key ) {
-		ModelAndView mv= new ModelAndView("displayProduct");
-		
+		ModelAndView mv= new ModelAndView("display");
+		if(key.trim().isEmpty()) {
+			mv.setViewName("home");
+			return mv;
+		}
 		if("mobile".equals(category)) {
 			List<Mobile> products=mserv.searchProduct(key);
 			mv.addObject("list",products);
@@ -169,7 +193,7 @@ public class HomeController {
 	
 	
 	@RequestMapping(path="/updateProfile", method=RequestMethod.POST)	
-	public ModelAndView updateProfile(@Valid @ModelAttribute("profile") UserProfile profile, BindingResult result) {	
+	public ModelAndView updateProfile(@Valid @ModelAttribute("profile") UserProfile profile, BindingResult result,HttpSession session) {	
 		if(result.hasErrors()) {
 			ModelAndView mv= new ModelAndView();
 			mv.addObject("error",result.getAllErrors());
@@ -183,10 +207,10 @@ public class HomeController {
 		
 		pserv.updateProfile(profile);
 		//user.setUserId(id);
-		
+		session.setAttribute("addMsg", "Profile Updated!");
 		mv.addObject("profile",profile);
 		
-		mv.setViewName("profile");
+		mv.setViewName("redirect:profile");
 		return mv;
 	}
 	
@@ -216,7 +240,7 @@ public class HomeController {
 
 		profile.setUser(user);
 		user.setUserProfile(profile);
-		int id=pserv.addUserProfile(profile);
+		pserv.addUserProfile(profile);
 		
 		
 	//	profile.setProfileId(id);

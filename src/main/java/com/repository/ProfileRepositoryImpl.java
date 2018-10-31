@@ -10,8 +10,6 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.dto.Address;
-import com.dto.User;
 import com.dto.UserProfile;
 
 @Repository

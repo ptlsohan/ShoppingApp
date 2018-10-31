@@ -1,19 +1,22 @@
 $().ready(function(){
-$('form').validate({
+	
+$('#login').validate({
 	rules: {	
-		email: {
-			required: true
+		username: {
+			required: true,
+			minlength: 2
 		},
 		password:{
-			required: true
+			required: true,
+			minlength: 5
 			
 		}
 	},
 	messages:{
-		email: {
-			required: "Please enter your Email"
+		username: {
+			required: "Please enter your username"
 		}
 	}
 });
-alert("hello");
+
 });

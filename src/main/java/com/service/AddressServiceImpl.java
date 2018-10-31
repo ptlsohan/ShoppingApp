@@ -1,7 +1,5 @@
 package com.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +16,9 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public int updateAddress(Address a) {
+	public void updateAddress(Address a) {
 		addrep.updateAddress(a);
-		return 0;
+		
 	}
 
 	@Override

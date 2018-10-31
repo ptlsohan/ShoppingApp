@@ -2,7 +2,6 @@ package com.service;
 
 import java.util.List;
 
-import com.dto.Fashion;
 import com.dto.Mobile;
 
 
@@ -14,5 +13,6 @@ public interface MobileService {
 	int updateMobile (Mobile  mobile );
 	int deleteProduct(int id);
 	int addProduct(Mobile mobile );
+	long getTotalCount();
 	
 }

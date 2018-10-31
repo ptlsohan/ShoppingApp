@@ -9,14 +9,12 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,13 +49,15 @@ public class ValidateController {
 			return mv;
 		}
 		mv.addObject("user",user);
-		System.out.println("profile"+user.getUsername());
+		
 		UserProfile profile=pserv.getProfileById(user.getUserId());
 		mv.addObject("profile",profile);
+		
 		
 		return mv;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(path="/loginValidate")
 	protected ModelAndView login(@Valid @ModelAttribute("user") User user, BindingResult result,SessionStatus status,
 			HttpSession session,HttpServletRequest req) {
@@ -74,7 +74,7 @@ public class ValidateController {
 			return mv;
 		}
 		if(u!=null && u.getPassword().equals(user.getPassword())) {
-//			Map<Product,Integer> cart= (Map<Product, Integer>) session.getAttribute("cart");
+
 			System.out.println("user cart"+u.getCart());
 			Map<Product,Integer> cart= (Map<Product, Integer>) session.getAttribute("cart");
 			if(cart!=null && !cart.isEmpty()) {
@@ -84,36 +84,29 @@ public class ValidateController {
 				c1.setCartList(cart);
 				c1.setUser(u);
 				u.setCart(c1);
-				//us.updateUser(user);
-			//	u.setCart(c1);
-				int id=cserv.addCart(c1);
+				
+				cserv.addCart(c1);
 				u.setConfirmPassword(u.getPassword());
 				us.updateUser(u);
 				value=cart.size();
-				System.out.println("user cart"+u.getCart());
+				
 			}else if(u.getCart()!=null) {
 				u.getCart().getCartList().putAll(cart);
 				u.setConfirmPassword(u.getPassword());
 				us.updateUser(u);
 				cart.clear();
 				value=u.getCart().getCartList().size();
-				System.out.println("cart size"+value);
+				
 			}
 			}else {
 				if(u.getCart()!=null)
 				value=u.getCart().getCartList().size();
 			}
-			System.out.println("cart size2"+value);
+			
 			session.setAttribute("cartSize", value);
 			mv.addObject("invalid",false);
 			mv.addObject("user",u);
-//			String url = (String) req.getAttribute("url");
-//			System.out.println("url from req"+url);
-//			if("/OnlineShoppingApp/checkout".equals(url)) {
-//				System.out.println("checkout");
-//				mv.setViewName("redirect:"+url);
-//				return mv;
-//			}
+
 			
 			mv.setViewName("redirect:home");
 			return mv;

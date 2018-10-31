@@ -60,6 +60,11 @@ public class AdminController {
 	public ModelAndView displayProduct(@RequestParam("start")int s) {
 	ModelAndView mv= new ModelAndView("displayProduct");
 	List<Product> products= ps.getAllProductByPage(s);
+	long total=ps.getTotalCount();
+	double val=(double)total/6;
+	int totalPage=(int) Math.ceil(val);
+	
+	mv.addObject("total",totalPage);
 	mv.addObject("list",products);
 	return mv;
 	}

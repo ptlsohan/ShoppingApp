@@ -2,10 +2,7 @@ package com.repository;
 
 import java.util.List;
 
-
-
 import com.dto.Book;
-import com.dto.Laptop;
 
 
 
@@ -18,5 +15,6 @@ public interface BookRepository {
 	int updateBook(Book b );
 	int deleteProduct(int id);
 	int addProduct(Book b );
+	long getTotalCount();
 	
 }

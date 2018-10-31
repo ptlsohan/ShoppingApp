@@ -1,14 +1,12 @@
 package com.dto;
 
 import java.sql.Date;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,11 +38,13 @@ public class CreditCard {
 	@NotBlank
 	private String fullName;
 	@NotBlank
+	@Size(min=15,max=15)
 	private String cardNum;
-	//@Pattern(regexp="^([12]\\d)?(\\d\\d)[\\.\\/\\-](0?[1-9]|1[012])[\\.\\/\\-](0?[1-9]|[12]\\d|3[01])$",message="Invalid date format")
+	
+
 	@DateTimeFormat(iso=ISO.DATE)
 	private Date expDate;
-//	private Address billAddr;
+
 	
 	
 }

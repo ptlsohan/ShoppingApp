@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Mobile;
-import com.dto.Product;
 
 @Repository
 public class MobileRepositoryImpl implements MobileRepository{
@@ -66,6 +65,7 @@ public class MobileRepositoryImpl implements MobileRepository{
 		return id;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Mobile> searchProduct(String key) {
 		Session session = sf.openSession();
@@ -79,7 +79,29 @@ public class MobileRepositoryImpl implements MobileRepository{
 		Query query = session.createQuery(cr);
 		List<Mobile> results = query.getResultList();
 		System.out.println("search result"+results);
+		tx.commit();
+		session.close();
 		return results;
+	}
+
+	@Override
+	public long getTotalCount() {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<Mobile> root = cr.from(Mobile.class);
+		cr.select(cb.count(root));
+		
+
+		Query query = session.createQuery(cr);
+		
+		Long result = (Long) query.getSingleResult();
+		
+		
+		tx.commit();
+		session.close();
+		return result;
 	}
 
 	

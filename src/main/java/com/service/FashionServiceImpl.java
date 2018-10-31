@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dto.Fashion;
-import com.dto.Product;
 import com.repository.FashionRepository;
 
 
@@ -54,6 +53,12 @@ public class FashionServiceImpl implements FashionService {
 	public List<Fashion> searchProduct(String key) {
 		// TODO Auto-generated method stub
 		return frep.searchProduct(key);
+	}
+
+	@Override
+	public long getTotalCount() {
+		// TODO Auto-generated method stub
+		return frep.getTotalCount();
 	}
 
 }

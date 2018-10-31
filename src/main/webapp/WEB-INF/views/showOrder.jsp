@@ -30,8 +30,9 @@
 							</td>
 							
 							<td data-th="Price"><c:forEach items="${entry.productList}" var="map">
-   <li> Product name = ${map.key.name} Qty = ${map.value}</li>
- 
+   <ol>
+   <li> Product name = ${map.key.name} x ${map.value}</li>
+ </ol>
 </c:forEach> </td>
 							<td data-th="Quantity">
 								${entry.address.street},${entry.address.apt}

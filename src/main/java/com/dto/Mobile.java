@@ -1,9 +1,6 @@
 package com.dto;
 
-import java.util.List;
-
 import javax.persistence.Entity;
-
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

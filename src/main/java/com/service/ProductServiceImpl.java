@@ -79,4 +79,10 @@ public class ProductServiceImpl implements ProductService{
 		return prep.searchApi(key);
 	}
 
+	@Override
+	public long getTotalCount() {
+		// TODO Auto-generated method stub
+		return prep.getTotalCount();
+	}
+
 }

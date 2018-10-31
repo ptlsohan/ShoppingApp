@@ -1,11 +1,9 @@
 package com.controller;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dto.Address;
@@ -29,7 +26,6 @@ import com.dto.CreditCard;
 import com.dto.Order;
 import com.dto.Product;
 import com.dto.User;
-import com.dto.UserProfile;
 import com.exception.DBException;
 import com.service.AddressService;
 import com.service.CartService;
@@ -66,7 +62,7 @@ public class CartController {
 		
 		Product p = ps.getProductById(id);
 		User user = (User) session.getAttribute("user");
-		System.out.println(p);
+		
 		if(user==null) {
 			
 			session.removeAttribute("user");
@@ -78,6 +74,7 @@ public class CartController {
 		}else {
 			Boolean isNewCart = false;
 			Cart c1=user.getCart();
+			
 			if (c1 == null) {	
 				c1 = new Cart();
 				isNewCart=true;
@@ -192,7 +189,7 @@ public class CartController {
 			return mv;
 		}
 		List<Address> addresses =user.getUserProfile().getAddress();
-		System.out.println(user.getUserProfile().getAddress());
+		
 		Map<Product,Integer> list =ucart.getCart().getCartList();
 		double total=0;
 		 for(Map.Entry<Product,Integer> entry: list.entrySet()) {
@@ -246,16 +243,16 @@ public class CartController {
 			User ucart=cs.getProductById(user.getUserId());
 			Map<Product,Integer> list =ucart.getCart().getCartList();
 			order.setProductList(list);
-			System.out.println("address id"+ address.getAddressId());
+			session.getAttribute("user");
 			addserv.addAddress(address);
 			order.setAddress(address);
 			
-			System.out.println("address street"+ address.getStreet());
+			
 			order.setCard(card);
 			order.setUser(user);
 			int id=os.addOrder(order);
-			//cs.deleteProduct(ucart.getCart());
 			ucart.setConfirmPassword(ucart.getPassword());
+			user.setCart(null);
 			ucart.setCart(null);
 			us.updateUser(ucart);
 			session.setAttribute("orderId",id);

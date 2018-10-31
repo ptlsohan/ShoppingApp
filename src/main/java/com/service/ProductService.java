@@ -16,4 +16,5 @@ public interface ProductService {
 	int addProduct(Product p);
 	int getQty(int id);
 	List<Product> searchApi(String key);
+	long getTotalCount();
 }

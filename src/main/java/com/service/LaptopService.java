@@ -12,6 +12,7 @@ public interface LaptopService {
 	int updateLaptop (Laptop l);
 	int deleteProduct(int id);
 	int addProduct(Laptop l);
+	long getTotalCount();
 	
 	
 }

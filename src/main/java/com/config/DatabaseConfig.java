@@ -16,7 +16,6 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.dto.Address;
 import com.dto.Book;
@@ -24,9 +23,9 @@ import com.dto.Cart;
 import com.dto.CreditCard;
 import com.dto.Fashion;
 import com.dto.Laptop;
-import com.dto.Product;
 import com.dto.Mobile;
 import com.dto.Order;
+import com.dto.Product;
 import com.dto.User;
 import com.dto.UserProfile;
 

@@ -32,7 +32,7 @@ public class LaptopServiceImpl implements LaptopService {
 
 	@Override
 	public Laptop getLaptopById(int id) {
-		// TODO Auto-generated method stub
+		
 		return lrep.getLaptopById(id);
 	}
 
@@ -52,6 +52,12 @@ public class LaptopServiceImpl implements LaptopService {
 	public int addProduct(Laptop l) {
 		// TODO Auto-generated method stub
 		return lrep.addProduct(l);
+	}
+
+	@Override
+	public long getTotalCount() {
+		// TODO Auto-generated method stub
+		return lrep.getTotalCount();
 	}
 
 }

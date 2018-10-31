@@ -14,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dto.Laptop;
-import com.dto.Product;
 
 @Repository
 public class LaptopRepositoryImpl implements LaptopRepository {
 
 	@Autowired SessionFactory sf;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Laptop> getAllLaptop() {
 		Session session = sf.openSession();
@@ -31,6 +31,7 @@ public class LaptopRepositoryImpl implements LaptopRepository {
 		return products;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Laptop> getLaptopByCategory(String category) {
 		Session session = sf.openSession();
@@ -41,6 +42,7 @@ public class LaptopRepositoryImpl implements LaptopRepository {
 		return products;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Laptop> searchProduct(String key) {
 		Session session = sf.openSession();
@@ -53,7 +55,8 @@ public class LaptopRepositoryImpl implements LaptopRepository {
 		
 		Query query = session.createQuery(cr);
 		List<Laptop> results = query.getResultList();
-		System.out.println("product search"+results);
+		tx.commit();
+		session.close();
 		return results;
 	}
 
@@ -83,6 +86,26 @@ public class LaptopRepositoryImpl implements LaptopRepository {
 	public int addProduct(Laptop l) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public long getTotalCount() {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Long> cr = cb.createQuery(Long.class);
+		Root<Laptop> root = cr.from(Laptop.class);
+		cr.select(cb.count(root));
+		
+
+		Query query = session.createQuery(cr);
+		
+		Long result = (Long) query.getSingleResult();
+		
+		
+		tx.commit();
+		session.close();
+		return result;
 	}
 
 }
